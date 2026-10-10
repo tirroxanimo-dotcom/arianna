@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arianna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Jost:wght@300;400;500&family=Space+Mono&display=swap">
+<style>
+  /* ===== Arianna · Art Deco Gold ===== */
+  :root{
+
+    /* ⬇⬇⬇ POZA DE FUNDAL FIXĂ (una singură pentru tot site-ul) ⬇⬇⬇
+       pune  url("poze/fundal.jpg")  sau lasă  none  pentru negru */
+    --fundal: url("poze/fundal.jpg");
+
+    /* întunecimea vălului de peste poză: mai MIC = mai luminos (0 … 1) */
+    --val: .66;
+
+    /* cât de sus e poza de fundal pe desktop (mai mult minus = mai sus) */
+    --fundal-sus: -80px;
+    /* ⬆⬆⬆ --------------------------------------------------------- ⬆⬆⬆ */
+
+    --bg:#0e0d0a;
+    --bg2:#15130d;
+    --fg:#efe7d4;
+    --muted:#a99a76;
+    --gold:#c9a24a;
+    --gold-2:#9a7c34;
+    --line:#2a2417;
+    --edit:#3fa0ff;
+    --disp:"Cinzel",Georgia,serif;
+    --body:"Jost",system-ui,sans-serif;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  html,body{margin:0;padding:0;overflow-x:hidden}
+  body{background:var(--bg);color:var(--fg);
+    font-family:var(--body);font-weight:300;line-height:1.6;
+    -webkit-font-smoothing:antialiased}
+
+  /* POZA FIXĂ pe tot ecranul, în spate — conținutul scrollează peste ea */
+  body::before{content:"";position:fixed;inset:0;z-index:-2;
+    background-image:var(--fundal);background-size:cover;
+    background-position:center var(--fundal-sus);background-repeat:no-repeat}
+  /* VĂLUL fix de peste poză (lizibilitate text) */
+  body::after{content:"";position:fixed;inset:0;z-index:-1;
+    background:rgba(14,13,10,var(--val))}
+
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:980px;margin:0 auto;padding-inline:22px}
+  .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--gold);font-weight:500}
+
+  .edit{color:var(--edit);font-family:"Space Mono",ui-monospace,monospace;
+    font-size:10px;letter-spacing:.06em;text-transform:none;
+    border:1px dashed var(--edit);padding:3px 7px;border-radius:3px;
+    margin-top:6px;background:rgba(63,160,255,.12)}
+
+  .divider{display:flex;align-items:center;justify-content:center;gap:16px;
+    color:var(--gold-2);margin:0 auto}
+  .divider::before,.divider::after{content:"";height:1px;width:min(90px,22vw);
+    background:linear-gradient(90deg,transparent,var(--gold-2))}
+  .divider::after{background:linear-gradient(90deg,var(--gold-2),transparent)}
+  .divider i{width:8px;height:8px;transform:rotate(45deg);
+    border:1px solid var(--gold);display:block}
+
+  header{border-bottom:1px solid var(--line);position:relative;z-index:1}
+  .nav{display:flex;align-items:center;justify-content:space-between;
+    padding-block:18px;gap:14px;flex-wrap:wrap}
+  .brand{font-family:var(--disp);font-weight:600;font-size:18px;
+    letter-spacing:.3em;color:var(--fg)}
+  .menu{display:flex;gap:26px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);flex-wrap:wrap}
+  .menu a{position:relative;padding:4px 0;transition:color .2s}
+  .menu a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+    background:var(--gold);transition:width .25s}
+  .menu a:hover{color:var(--fg)}
+  .menu a:hover::after{width:100%}
+
+  section{padding-block:60px;position:relative;z-index:1}
+
+  /* ---- HERO ---- */
+  #hero{text-align:center;padding-block:90px 70px}
+  #hero .eyebrow{display:block;margin-bottom:22px}
+  #hero h1{font-family:var(--disp);font-weight:700;margin:0 auto 22px;
+    font-size:clamp(44px,11vw,92px);letter-spacing:.1em;line-height:1;
+    text-transform:uppercase;display:inline-block;padding:18px 0;max-width:100%;
+    border-top:1px solid var(--gold);border-bottom:1px solid var(--gold)}
+  #hero .tagline{max-width:40ch;margin:0 auto 30px;color:var(--fg);opacity:.92;
+    font-size:clamp(15px,2.3vw,18px)}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    padding:14px 26px;font-weight:500;transition:.2s;cursor:pointer;
+    display:inline-block}
+  .btn.gold{background:var(--gold);color:#120f08}
+  .btn.gold:hover{background:#dcb45c}
+  .btn.ghost{border:1px solid var(--gold);color:var(--fg)}
+  .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+  /* ---- zonă-foto (merge și ca <div> gol, și ca <img class="photo">) ---- */
+  .photo{position:relative;background:rgba(21,19,13,.72);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    gap:5px;color:var(--muted);overflow:hidden;aspect-ratio:3/4;padding:10px;
+    object-fit:cover;width:100%}
+  img.photo{padding:0}
+  .photo::before,.photo::after{content:"";position:absolute;width:20px;height:20px;
+    border:1px solid var(--gold);opacity:.7}
+  .photo::before{top:12px;left:12px;border-right:none;border-bottom:none}
+  .photo::after{bottom:12px;right:12px;border-left:none;border-top:none}
+  .photo .k{font-family:var(--disp);font-size:13px;letter-spacing:.22em;color:var(--gold)}
+  .photo img{width:100%;height:100%;object-fit:cover}
+
+  .sec-head{text-align:center;margin-bottom:34px}
+  .sec-head .divider{margin-bottom:18px}
+  .sec-head h2{font-family:var(--disp);font-weight:600;margin:0;
+    font-size:clamp(24px,4.5vw,34px);letter-spacing:.14em;text-transform:uppercase}
+
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .about .photo{aspect-ratio:4/5}
+  .about p{margin:0 0 16px;color:var(--fg);opacity:.92}
+  .about p:last-child{margin-bottom:0}
+  .about p.lead{font-size:18px;color:var(--gold);opacity:1;font-weight:400}
+  .about .text{background:rgba(14,13,10,.55);padding:26px;border:1px solid var(--line)}
+
+  .players{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .player{background:rgba(21,19,13,.82);border:1px solid var(--line);
+    aspect-ratio:16/10;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:10px;color:var(--muted);transition:border-color .2s;padding:10px}
+  .player:hover{border-color:var(--gold-2)}
+  .player .play{width:46px;height:46px;border:1px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--gold)}
+  .player .play svg{width:16px;height:16px;margin-left:3px}
+  .player .pl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg)}
+
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+  .events{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:2px;
+    background:rgba(14,13,10,.55);padding:10px 24px;border:1px solid var(--line)}
+  .event{display:flex;align-items:baseline;gap:20px;padding:18px 4px;
+    border-bottom:1px solid var(--line)}
+  .event:last-child{border-bottom:none}
+  .event .date{font-family:var(--disp);color:var(--gold);font-size:14px;
+    letter-spacing:.08em;min-width:92px}
+  .event .what{font-size:15px}
+  .event .where{margin-left:auto;color:var(--muted);font-size:13px;
+    letter-spacing:.06em;text-align:right}
+
+  #contact{text-align:center}
+  .contact-card{max-width:520px;margin:0 auto;border:1px solid var(--gold-2);
+    padding:40px 28px;background:rgba(14,13,10,.78)}
+  .contact-card .eyebrow{display:block;margin-bottom:14px}
+  .contact-card .mail{font-family:var(--disp);font-size:clamp(18px,4vw,26px);
+    letter-spacing:.06em;color:var(--fg);margin-bottom:8px;word-break:break-all;user-select:all}
+  .contact-card .hint{color:var(--muted);font-size:13px;margin-bottom:22px}
+  .copy{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    border:1px solid var(--gold-2);color:var(--fg);padding:12px 22px;
+    background:transparent;cursor:pointer;transition:.2s}
+  .copy:hover{border-color:var(--gold);color:var(--gold)}
+
+  footer{border-top:1px solid var(--line);text-align:center;padding-block:34px;
+    position:relative;z-index:1;background:rgba(14,13,10,.65)}
+  footer .fm{font-family:var(--disp);letter-spacing:.3em;color:var(--gold);
+    font-size:15px;margin-bottom:10px}
+  footer .fs{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+  /* ===================== TELEFON ===================== */
+  @media (max-width:720px){
+    section{padding-block:46px}
+    #hero{padding-block:64px 52px}
+    .players{grid-template-columns:1fr}
+    .about{grid-template-columns:1fr;gap:24px}
+    .sec-head{margin-bottom:26px}
+  }
+  @media (max-width:600px){
+    .nav{flex-direction:column;justify-content:center;gap:12px}
+    .menu{justify-content:center;gap:18px}
+    /* pe telefon ancorăm poza de fundal sus, ca să nu taie capul */
+    body::before{background-position:center top}
+    /* butoanele pe toată lățimea, ușor de apăsat */
+    .cta{flex-direction:column;align-items:stretch}
+    .btn{width:100%;text-align:center}
+    .gallery{grid-template-columns:1fr 1fr;gap:12px}
+    .about .text{padding:20px}
+    .contact-card{padding:32px 20px}
+    .event{flex-wrap:wrap;gap:4px 16px}
+    .event .where{margin-left:0;text-align:left;width:100%}
+  }
+  @media (max-width:380px){
+    .gallery{grid-template-columns:1fr}
+    #hero h1{letter-spacing:.06em}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <div class="brand">ARIANNA</div>
+      <div class="menu">
+        <a href="#despre">Despre</a>
+        <a href="#asculta">Ascultă</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="wrap">
+    <span class="eyebrow">Muzică ușoară &amp; Jazz</span>
+    <h1>Arianna</h1>
+    <p class="tagline">O voce caldă, între melodia ușoară și eleganța jazzului.</p>
+    <div class="cta">
+      <a class="btn gold" href="#asculta">Ascultă</a>
+      <a class="btn ghost" href="#contact">Pentru evenimente</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DESPRE ============ -->
+<section id="despre">
+  <div class="wrap">
+    <div class="sec-head"><div class="divider"><i></i></div><h2>Despre</h2></div>
+    <div class="about">
+      <div class="text">
+        <p class="lead">Aici scriem bio-ul real al Ariannei.</p>
+        <p>Câteva rânduri despre ea — ce stil cântă, de când, pe ce scene a urcat, ce o face specială. Text exemplu, până îl scriem împreună.</p>
+        <p>Spune aici și ce caută: colaborări, evenimente, cântat live. Scurt și cald.</p>
+      </div>
+      <!-- FOTO DESPRE — schimbă numele dacă vrei altă poză -->
+      <img src="poze/despre.jpg" alt="Arianna" class="photo">
+    </div>
+  </div>
+</section>
+
+<!-- ============ ASCULTĂ ============ -->
+<section id="asculta">
+  <div class="wrap">
+    <div class="sec-head"><div class="divider"><i></i></div><h2>Ascultă &amp; Vezi</h2></div>
+    <div class="players">
+      <!-- Pe site-ul real înlocuiești fiecare .player cu codul embed (iframe) de la platformă -->
+      <div class="player"><div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><span class="pl">YouTube</span><span class="edit">◄ pune embed YouTube ►</span></div>
+      <div class="player"><div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><span class="pl">Spotify</span><span class="edit">◄ pune embed Spotify ►</span></div>
+      <div class="player"><div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><span class="pl">TikTok</span><span class="edit">◄ pune embed TikTok ►</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERIE ============ -->
+<section id="galerie">
+  <div class="wrap">
+    <div class="sec-head"><div class="divider"><i></i></div><h2>Galerie</h2></div>
+    <div class="gallery">
+      <!-- Fiecare: <img src="poze/galerie-1.jpg" alt="" class="photo"> -->
+      <div class="photo" role="img"><span class="k">FOTO</span><span class="edit">◄ poze/galerie-1.jpg ►</span></div>
+      <div class="photo" role="img"><span class="k">FOTO</span><span class="edit">◄ poze/galerie-2.jpg ►</span></div>
+      <div class="photo" role="img"><span class="k">FOTO</span><span class="edit">◄ poze/galerie-3.jpg ►</span></div>
+      <div class="photo" role="img"><span class="k">FOTO</span><span class="edit">◄ poze/galerie-4.jpg ►</span></div>
+      <div class="photo" role="img"><span class="k">FOTO</span><span class="edit">◄ poze/galerie-5.jpg ►</span></div>
+      <div class="photo" role="img"><span class="k">FOTO</span><span class="edit">◄ poze/galerie-6.jpg ►</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENIMENTE (opțional) ============ -->
+<section id="evenimente">
+  <div class="wrap">
+    <div class="sec-head"><div class="divider"><i></i></div><h2>Evenimente</h2></div>
+    <div class="events">
+      <div class="event"><span class="date">— — —</span><span class="what">Titlul evenimentului</span><span class="where">Locație</span></div>
+      <div class="event"><span class="date">— — —</span><span class="what">Titlul evenimentului</span><span class="where">Locație</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head"><div class="divider"><i></i></div><h2>Contact</h2></div>
+    <div class="contact-card">
+      <span class="eyebrow">Pentru colaborări &amp; evenimente</span>
+      <!-- Schimbă cu adresa reală de contact pe care o gestionezi tu -->
+      <div class="mail" id="mail">contact@arianna.ro</div>
+      <p class="hint">Scrie-ne pentru booking, colaborări sau cântat live.</p>
+      <button class="copy" id="copyBtn">Copiază adresa</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fm">A</div>
+  <div class="fs">Arianna · Muzică ușoară &amp; Jazz · <span id="yr"></span></div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t=document.querySelector(this.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  var btn=document.getElementById('copyBtn');
+  btn.addEventListener('click',function(){
+    var mail=document.getElementById('mail').textContent.trim();
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(mail).then(function(){
+        btn.textContent='Copiat ✓';setTimeout(function(){btn.textContent='Copiază adresa';},1800);
+      }).catch(select);
+    }else{select();}
+    function select(){
+      var r=document.createRange();r.selectNodeContents(document.getElementById('mail'));
+      var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+      btn.textContent='Selectat — Ctrl+C';setTimeout(function(){btn.textContent='Copiază adresa';},2200);
+    }
+  });
+</script>
+
+</body>
+</html>
